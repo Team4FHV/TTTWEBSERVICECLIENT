@@ -1,15 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package webserviceDTO;
+
+import java.io.Serializable;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
- * @author Stefan Dietrich
+ * @author Monika
  */
-public class WebKategorieKarte {
-    
+@XmlType(propOrder = {"kartenList"})
+public class WebKategorieKarte implements Serializable {
+
+    public webserviceDTO.WebKarte kartenList[] = null;
+
+    public WebKategorieKarte() {
+    }
+
+    public WebKategorieKarte(webserviceDTO.WebKarte[] _kartenList) {
+        kartenList = _kartenList;
+    }
+
+    @XmlElement(name = "kartenList", required = true)
+    public WebKarte[] getKartenList() {
+        return kartenList;
+    }
+
 }

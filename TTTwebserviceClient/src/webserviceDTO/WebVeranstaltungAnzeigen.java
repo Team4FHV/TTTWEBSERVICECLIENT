@@ -1,15 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package webserviceDTO;
 
-/**
- *
- * @author Stefan Dietrich
+import java.io.Serializable;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+/***
+ * 
+ * @author Monika
  */
-public class WebVeranstaltungAnzeigen {
-    
+@XmlType(propOrder = {"id"})
+public class WebVeranstaltungAnzeigen implements Serializable {
+
+    public int id = (int) 0;
+
+    public WebVeranstaltungAnzeigen() {
+    }
+
+    public WebVeranstaltungAnzeigen(int _id) {
+        id = _id;
+    }
+
+    @XmlElement(name = "id", required = true)
+    public int getId() {
+        return id;
+    }
 }
