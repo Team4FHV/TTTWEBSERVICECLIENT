@@ -5,13 +5,13 @@
  */
 package webGUICtrl;
 
-import client.CorbaClient;
-import corba.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import tttwebserviceClient.WebserviceClient;
+import webserviceDTO.*;
 
 /**
  *
@@ -19,44 +19,26 @@ import javax.swing.table.TableModel;
  */
 public class WebVeranstaltungsSuchenCtrl {
 
+    private ArrayList<WebVeranstaltung> _veranstaltungen = new ArrayList<>();
+    private WebserviceClient _client;
 
-    //Neu
-    private ArrayList<StructVeranstaltung> _veranstaltungen = new ArrayList<>();
-    private CorbaClient _client;
-
-    public WebVeranstaltungsSuchenCtrl(CorbaClient client) {
-         _client = client;
-//        try {
-            _veranstaltungen = _client.sucheVeranstaltungNachKriterien("", "", "");
-//        } catch (RemoteException ex) {
-//            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
+    public WebVeranstaltungsSuchenCtrl(WebserviceClient client) {
+        _client = client;
+        _veranstaltungen = _client.sucheVeranstaltungNachKriterien("", "", "");
     }
 
     public void searchingForEvents(String date, String place, String artist) {
-        Date d = null;
-        try {
-//            SimpleDateFormat sdfToDate = new SimpleDateFormat("dd.MM.yyyy");
-//            d = sdfToDate.parse(date);
-          
-        } catch (Exception e) {
-        }
-        System.out.println(d);
-//        try {
-            _veranstaltungen = _client.sucheVeranstaltungNachKriterien(date, place, artist);
-//        } catch (RemoteException ex) {
-//            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
+        _veranstaltungen = _client.sucheVeranstaltungNachKriterien(date, place, artist);
     }
 
     public void VeranstaltungAnzeigen(int vId) {
-       WebMainGuiCtrl.VeranstaltungAusgewaehlt(vId);
+        WebMainGuiCtrl.VeranstaltungAusgewaehlt(vId);
     }
 
     public TableModel getVeranstaltungInfoModel() {
         Object[][] ob = new Object[_veranstaltungen.size()][5];
         for (int i = 0; i < _veranstaltungen.size(); i++) {
-            StructVeranstaltung ev = _veranstaltungen.get(i);
+            WebVeranstaltung ev = _veranstaltungen.get(i);
             ob[i][0] = ev.vDatum;
             ob[i][1] = ev.vName;
             ob[i][2] = ev.vOrt;

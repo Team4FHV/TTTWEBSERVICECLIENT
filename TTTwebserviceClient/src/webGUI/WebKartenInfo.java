@@ -652,16 +652,16 @@ public class WebKartenInfo extends javax.swing.JFrame {
 
     private void fillVeranstaltungsInformation() {
         WebVeranstaltung veranstaltung = _ctrl.getVeranstaltung();
-        _lblVeranstaltungsname.setText(veranstaltung.getName());
-        _lblVeranstaltungsdatum.setText(veranstaltung.getDatum());
-        _lblVeranstaltungsort.setText(veranstaltung.getOrt());
+        _lblVeranstaltungsname.setText(veranstaltung.getvName());
+        _lblVeranstaltungsdatum.setText(veranstaltung.getvDatum());
+        _lblVeranstaltungsort.setText(veranstaltung.getvOrt());
     }
 
     private void fillKategorieInformation() {
         WebKategorieInformation kategorie = _ctrl.getKategorie();
         _lblKategoriename.setText(kategorie.katName);
-        _lblKategoriepreis.setText(kategorie.getkatPreis() + " €");
-        _lblFreiePlaetze.setText("" + kategorie.getfreiePlaetze());
+        _lblKategoriepreis.setText(kategorie.getKatPreis()+ " €");
+        _lblFreiePlaetze.setText("" + kategorie.getFreiePlaetze());
     }
 
     private void btnKaufenClicked() {

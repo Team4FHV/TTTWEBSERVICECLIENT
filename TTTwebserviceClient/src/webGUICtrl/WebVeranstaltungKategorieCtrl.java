@@ -4,11 +4,11 @@
  */
 package webGUICtrl;
 
-import client.CorbaClient;
-import corba.*;
+import webserviceDTO.*;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import tttwebserviceClient.WebserviceClient;
 
 /**
  *
@@ -16,25 +16,17 @@ import javax.swing.table.TableModel;
  */
 public class WebVeranstaltungKategorieCtrl {
 
-    private  StructVeranstaltung _veranstaltung;
-    private CorbaClient _client;
-    private ArrayList<StructKategorieInformation> _kategorien;
+    private WebVeranstaltung _veranstaltung;
+    private WebserviceClient _client;
+    private ArrayList<WebKategorieInformation> _kategorien;
 
-    public WebVeranstaltungKategorieCtrl(int veranstaltungID, CorbaClient client) {
+    public WebVeranstaltungKategorieCtrl(int veranstaltungID, WebserviceClient client) {
         _client = client;
-//        try {
-            _veranstaltung = _client.getVeranstaltungById(veranstaltungID);
-//        } catch (RemoteException ex) {
-//            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
-//        try {
-            _kategorien = _client.getKategorieInfoVonVeranstaltung(new StructVeranstaltungAnzeigen(_veranstaltung.vid));
-//        } catch (RemoteException ex) {
-//            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
+        _veranstaltung = _client.getVeranstaltungById(veranstaltungID);
+        _kategorien = _client.getKategorieInfoVonVeranstaltung(new WebVeranstaltungAnzeigen(_veranstaltung.vid));
     }
 
-    public StructVeranstaltung getVeranstaltung() {
+    public WebVeranstaltung getVeranstaltung() {
         return _veranstaltung;
     }
 
@@ -49,32 +41,28 @@ public class WebVeranstaltungKategorieCtrl {
         return (new DefaultTableModel(
                 ob,
                 new String[]{
-            "KategorieID", "Kategoriename", "Kategoriepreis", "Freie Plätze"
-        }) {
-            Class[] types = new Class[]{
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean[]{
-                false, false, false, false
-            };
+                    "KategorieID", "Kategoriename", "Kategoriepreis", "Freie Plätze"
+                }) {
+                    Class[] types = new Class[]{
+                        java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                    };
+                    boolean[] canEdit = new boolean[]{
+                        false, false, false, false
+                    };
 
-            public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
-            }
+                    public Class getColumnClass(int columnIndex) {
+                        return types[columnIndex];
+                    }
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        });
+                    public boolean isCellEditable(int rowIndex, int columnIndex) {
+                        return canEdit[columnIndex];
+                    }
+                });
     }
 
     public void selectKategorie(int id) {
-        StructKategorieInformation selectedKategorie = null;
-//        try {
-            selectedKategorie = _client.getKategorieInfo(id);
-//        } catch (RemoteException ex) {
-//            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
+        WebKategorieInformation selectedKategorie = null;
+        selectedKategorie = _client.getKategorieInfo(id);
         if (selectedKategorie != null) {
             WebMainGuiCtrl.KategorieAusgewählt(_veranstaltung.vid, selectedKategorie.kategId);
         }
@@ -85,15 +73,7 @@ public class WebVeranstaltungKategorieCtrl {
     }
 
     void setVeranstaltungsID(int id) {
-//        try {
-            _veranstaltung = _client.getVeranstaltungById(id);
-//        } catch (RemoteException ex) {
-//            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
-//        try {
-            _kategorien = _client.getKategorieInfoVonVeranstaltung(new StructVeranstaltungAnzeigen(_veranstaltung.vid));
-//        } catch (RemoteException ex) {
-//            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
+        _veranstaltung = _client.getVeranstaltungById(id);
+        _kategorien = _client.getKategorieInfoVonVeranstaltung(new WebVeranstaltungAnzeigen(_veranstaltung.vid));
     }
 }

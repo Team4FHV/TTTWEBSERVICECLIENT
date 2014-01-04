@@ -39,7 +39,7 @@ public class WebKartenInfoCtrl {
 //            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 //        }
 //        try {
-        _Kategoriekarten = _client.getAlleFreieKartenNachKategorie(_kategorie.getKategorieID());
+        _Kategoriekarten = _client.getAlleFreieKartenNachKategorie(_kategorie.getKategId());
 //        } catch (RemoteException ex) {
 //            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 //        }
@@ -70,47 +70,39 @@ public class WebKartenInfoCtrl {
         return (new DefaultTableModel(
                 ob,
                 new String[]{
-            "Auswählen", "KartenID", "Reihe", "Sitzplatz", "Ermäßigt"
-        }) {
-            Class[] types = new Class[]{
-                java.lang.Boolean.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
-            };
-            boolean[] canEdit = new boolean[]{
-                true, false, false, false, true
-            };
+                    "Auswählen", "KartenID", "Reihe", "Sitzplatz", "Ermäßigt"
+                }) {
+                    Class[] types = new Class[]{
+                        java.lang.Boolean.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+                    };
+                    boolean[] canEdit = new boolean[]{
+                        true, false, false, false, true
+                    };
 
-            public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
-            }
+                    public Class getColumnClass(int columnIndex) {
+                        return types[columnIndex];
+                    }
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
-            }
-        });
+                    public boolean isCellEditable(int rowIndex, int columnIndex) {
+                        return canEdit[columnIndex];
+                    }
+                });
     }
 
-    public void kartenBestellen(List<Object[]> bestellteKarten) throws CobraException {
-        List<StructKarteBestellen> karten = new LinkedList<>();
+    public void kartenBestellen(List<Object[]> bestellteKarten) {
+        List<WebKarteBestellen> karten = new LinkedList<>();
         int kundenID = 0;
         for (Object[] o : bestellteKarten) {
 
-            karten.add(new StructKarteBestellen((int) o[1], kundenID, (boolean) o[4]));
+            karten.add(new WebKarteBestellen((int) o[1], kundenID, (boolean) o[4]));
         }
         _client.verkaufSpeichern(karten);
         updateController();
     }
 
     private void updateController() {
-//        try {
         _kategorie = _client.getKategorieInfo(_kategorie.kategId);
-//        } catch (RemoteException ex) {
-//            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
-//        try {
         _Kategoriekarten = _client.getAlleFreieKartenNachKategorie(_kategorie.kategId);
-//        } catch (RemoteException ex) {
-//            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
     }
 
     public void cancelClicked() {
@@ -118,24 +110,13 @@ public class WebKartenInfoCtrl {
     }
 
     void setVeranstaltung(int veranstaltungID) {
-//        try {
         _veranstaltung = _client.getVeranstaltungById(veranstaltungID);
-//        } catch (RemoteException ex) {
-//            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
     }
 
     void setKategorieID(int kategorieID) {
-//        try {
         _kategorie = _client.getKategorieInfo(kategorieID);
-//        } catch (RemoteException ex) {
-//            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
-//        try {
         _Kategoriekarten = _client.getAlleFreieKartenNachKategorie(_kategorie.kategId);
-//        } catch (RemoteException ex) {
-//            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-//        }
+
     }
 
     public void loadKarten() {
