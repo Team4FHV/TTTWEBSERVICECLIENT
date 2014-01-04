@@ -27,7 +27,8 @@ public class WebserviceClient {
     }
 
     private void initConnection() {
-
+        //  TTTwebserviceService factory = new TTTwebserviceService();
+        //stub = factory.getTTTwebservicePort();
     }
 
     public ArrayList<WebVeranstaltung> sucheVeranstaltungNachKriterien(String datum, String ort, String kuenstler) {
