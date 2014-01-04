@@ -16,29 +16,35 @@ import webserviceDTO.*;
  */
 public class WebserviceClient {
 
+    TTTwebservice stub;
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    public WebserviceClient() {
+        initConnection();
+    }
+
+    private void initConnection() {
+
     }
 
     public ArrayList<WebVeranstaltung> sucheVeranstaltungNachKriterien(String datum, String ort, String kuenstler) {
         ArrayList<WebVeranstaltung> result = new ArrayList<>();
-        WebVeranstaltung[] list = Stub.sucheVeranstaltungNachKriterien(datum, ort, kuenstler);
+        WebVeranstaltung[] list = stub.sucheVeranstaltungNachKriterien(datum, ort, kuenstler);
         result.addAll(Arrays.asList(list));
         return result;
     }
 
     public ArrayList<WebKategorieInformation> getKategorieInfoVonVeranstaltung(WebVeranstaltungAnzeigen veranstaltung) {
         ArrayList<WebKategorieInformation> result = new ArrayList<>();
-        WebKategorieInformation[] list = Stub.getKategorieInfoVonVeranstaltung(veranstaltung);
+        WebKategorieInformation[] list = stub.getKategorieInfoVonVeranstaltung(veranstaltung);
         result.addAll(Arrays.asList(list));
         return result;
     }
 
     public WebKategorieKarte getAlleFreieKartenNachKategorie(int id) {
-        return Stub.getAlleFreieKartenNachKategorie(new WebKategorieAuswaehlen(id));
+        return stub.getAlleFreieKartenNachKategorie(new WebKategorieAuswaehlen(id));
     }
 
     public void verkaufSpeichern(List<WebKarteBestellen> list) {
@@ -46,11 +52,11 @@ public class WebserviceClient {
         for (int i = 0; i < list.size(); i++) {
             karten[i] = list.get(i);
         }
-        Stub.verkaufSpeichern(karten);
+        stub.verkaufSpeichern(karten);
     }
 
     public WebKategorieInformation getKategorieInfo(int id) {
-        return Stub.getKategorieInfo(id);
+        return stub.getKategorieInfo(id);
     }
 
     public WebVeranstaltung getVeranstaltungById(int veranstaltungID) {
