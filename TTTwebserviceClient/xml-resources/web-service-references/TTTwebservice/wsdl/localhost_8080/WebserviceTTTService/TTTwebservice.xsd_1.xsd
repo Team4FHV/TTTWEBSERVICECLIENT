@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://webservice/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://webservice/">
+
+<xs:element name="getAlleFreieKartenNachKategorie" type="tns:getAlleFreieKartenNachKategorie"/>
+
+<xs:element name="getAlleFreieKartenNachKategorieResponse" type="tns:getAlleFreieKartenNachKategorieResponse"/>
+
+<xs:element name="getKategorieInfo" type="tns:getKategorieInfo"/>
+
+<xs:element name="getKategorieInfoResponse" type="tns:getKategorieInfoResponse"/>
+
+<xs:element name="getKategorieInfoVonVeranstaltung" type="tns:getKategorieInfoVonVeranstaltung"/>
+
+<xs:element name="getKategorieInfoVonVeranstaltungResponse" type="tns:getKategorieInfoVonVeranstaltungResponse"/>
+
+<xs:element name="getVeranstaltungById" type="tns:getVeranstaltungById"/>
+
+<xs:element name="getVeranstaltungByIdResponse" type="tns:getVeranstaltungByIdResponse"/>
+
+<xs:element name="sucheVeranstaltungNachKriterien" type="tns:sucheVeranstaltungNachKriterien"/>
+
+<xs:element name="sucheVeranstaltungNachKriterienResponse" type="tns:sucheVeranstaltungNachKriterienResponse"/>
+
+<xs:element name="verkaufSpeichern" type="tns:verkaufSpeichern"/>
+
+<xs:element name="verkaufSpeichernResponse" type="tns:verkaufSpeichernResponse"/>
+
+<xs:complexType name="getVeranstaltungById">
+<xs:sequence>
+<xs:element name="veranstaltungID" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getVeranstaltungByIdResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:webVeranstaltung" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="webVeranstaltung">
+<xs:sequence>
+<xs:element name="vid" type="xs:int"/>
+<xs:element name="vDatum" type="xs:string"/>
+<xs:element name="vName" type="xs:string"/>
+<xs:element name="vOrt" type="xs:string"/>
+<xs:element name="vKuenstler" type="xs:string"/>
+<xs:element name="vErmaessigt" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="sucheVeranstaltungNachKriterien">
+<xs:sequence>
+<xs:element name="datum" type="xs:string" minOccurs="0"/>
+<xs:element name="ort" type="xs:string" minOccurs="0"/>
+<xs:element name="kuenstler" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="sucheVeranstaltungNachKriterienResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:webVeranstaltung" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="verkaufSpeichern">
+<xs:sequence>
+<xs:element name="list" type="tns:webKarteBestellen" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="webKarteBestellen">
+<xs:sequence>
+<xs:element name="kbKartenId" type="xs:int"/>
+<xs:element name="kbKundenId" type="xs:int"/>
+<xs:element name="kbErmaessigt" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="verkaufSpeichernResponse">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getKategorieInfo">
+<xs:sequence>
+<xs:element name="kategorieID" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getKategorieInfoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:webKategorieInformation" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="webKategorieInformation" final="extension restriction">
+<xs:sequence>
+<xs:element name="katinfKatId" type="xs:int"/>
+<xs:element name="katinfName" type="xs:string"/>
+<xs:element name="katinfPreis" type="xs:double"/>
+<xs:element name="katinfFreiePlaetze" type="xs:int"/>
+<xs:element name="katinfErmaessigung" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getKategorieInfoVonVeranstaltung">
+<xs:sequence>
+<xs:element name="veranstaltung" type="tns:webVeranstaltungAnzeigen" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="webVeranstaltungAnzeigen">
+<xs:sequence>
+<xs:element name="vanzId" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getKategorieInfoVonVeranstaltungResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:webKategorieInformation" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getAlleFreieKartenNachKategorie">
+<xs:sequence>
+<xs:element name="kategorieID" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getAlleFreieKartenNachKategorieResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:webKategorieKarte" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="webKategorieKarte">
+<xs:sequence>
+<xs:element name="kartenList" type="tns:webKarte" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="webKarte">
+<xs:sequence>
+<xs:element name="kKartenId" type="xs:int"/>
+<xs:element name="kReihe" type="xs:string"/>
+<xs:element name="kPlatz" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

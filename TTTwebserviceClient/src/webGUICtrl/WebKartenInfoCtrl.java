@@ -4,16 +4,13 @@
  */
 package webGUICtrl;
 
-import webserviceDTO.*;
+
 import tttwebserviceClient.WebserviceClient;
-import webExceptions.KarteNichtVerfuegbarException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import tttwebserviceClient.*;
 
 /**
  *
@@ -39,7 +36,7 @@ public class WebKartenInfoCtrl {
 //            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 //        }
 //        try {
-        _Kategoriekarten = _client.getAlleFreieKartenNachKategorie(_kategorie.getKategId());
+        _Kategoriekarten = _client.getAlleFreieKartenNachKategorie(_kategorie.getKatinfKatId());
 //        } catch (RemoteException ex) {
 //            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 //        }
@@ -58,13 +55,13 @@ public class WebKartenInfoCtrl {
     }
 
     public TableModel getKartenInfoModel() {
-        Object[][] ob = new Object[_Kategoriekarten.kartenList.length][5];
-        for (int i = 0; i < _Kategoriekarten.kartenList.length; i++) {
-            WebKarte k = _Kategoriekarten.kartenList[i];
+        Object[][] ob = new Object[_Kategoriekarten.getKartenList().size()][5];
+        for (int i = 0; i < _Kategoriekarten.getKartenList().size(); i++) {
+            WebKarte k = _Kategoriekarten.getKartenList().get(i);
             ob[i][0] = false;
-            ob[i][1] = k.kartenId;
-            ob[i][2] = k.reihe;
-            ob[i][3] = k.platz;
+            ob[i][1] = k.getKKartenId();
+            ob[i][2] = k.getKReihe();
+            ob[i][3] = k.getKPlatz();
             ob[i][4] = false;
         }
         return (new DefaultTableModel(
@@ -93,20 +90,23 @@ public class WebKartenInfoCtrl {
         List<WebKarteBestellen> karten = new LinkedList<>();
         int kundenID = 0;
         for (Object[] o : bestellteKarten) {
-
-            karten.add(new WebKarteBestellen((int) o[1], kundenID, (boolean) o[4]));
+            WebKarteBestellen temp = new WebKarteBestellen();
+            temp.setKbKartenId((int)o[1]);
+            temp.setKbKundenId(kundenID);
+            temp.setKbErmaessigt((boolean)o[4]);
+            karten.add(temp);
         }
         _client.verkaufSpeichern(karten);
         updateController();
     }
 
     private void updateController() {
-        _kategorie = _client.getKategorieInfo(_kategorie.kategId);
-        _Kategoriekarten = _client.getAlleFreieKartenNachKategorie(_kategorie.kategId);
+        _kategorie = _client.getKategorieInfo(_kategorie.getKatinfKatId());
+        _Kategoriekarten = _client.getAlleFreieKartenNachKategorie(_kategorie.getKatinfKatId());
     }
 
     public void cancelClicked() {
-        WebMainGuiCtrl.KarteCancel(_veranstaltung.vid);
+        WebMainGuiCtrl.KarteCancel(_veranstaltung.getVid());
     }
 
     void setVeranstaltung(int veranstaltungID) {
@@ -115,11 +115,11 @@ public class WebKartenInfoCtrl {
 
     void setKategorieID(int kategorieID) {
         _kategorie = _client.getKategorieInfo(kategorieID);
-        _Kategoriekarten = _client.getAlleFreieKartenNachKategorie(_kategorie.kategId);
+        _Kategoriekarten = _client.getAlleFreieKartenNachKategorie(_kategorie.getKatinfKatId());
 
     }
 
     public void loadKarten() {
-        _Kategoriekarten = _client.getAlleFreieKartenNachKategorie(_kategorie.kategId);
+        _Kategoriekarten = _client.getAlleFreieKartenNachKategorie(_kategorie.getKatinfKatId());
     }
 }

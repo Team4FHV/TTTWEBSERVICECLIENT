@@ -5,21 +5,16 @@
 package webGUI;
 
 import webGUICtrl.WebKartenInfoCtrl;
-import webExceptions.KarteNichtVerfuegbarException;
-import webExceptions.SaveFailedException;
-import webserviceDTO.WebKategorieInformation;
-import webserviceDTO.WebVeranstaltung;
 import java.math.BigDecimal;
-import java.rmi.RemoteException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+import tttwebserviceClient.WebKategorieInformation;
+import tttwebserviceClient.WebVeranstaltung;
 
 /**
  *
@@ -569,8 +564,8 @@ public class WebKartenInfo extends javax.swing.JFrame {
 
     private void changePreis() {
         BigDecimal preis = new BigDecimal(0);
-        BigDecimal kartenpreis = new BigDecimal(_ctrl.getKategorie().katPreis);
-        int ermaessigung = 100 - _ctrl.getKategorie().ermaessigung;
+        BigDecimal kartenpreis = new BigDecimal(_ctrl.getKategorie().getKatinfPreis());
+        int ermaessigung = 100 - _ctrl.getKategorie().getKatinfErmaessigung();
         BigDecimal ermaessigt = new BigDecimal(ermaessigung);
         ermaessigt = ermaessigt.divide(new BigDecimal(100));
         BigDecimal karteErmaessigt = kartenpreis.multiply(ermaessigt);
@@ -652,16 +647,16 @@ public class WebKartenInfo extends javax.swing.JFrame {
 
     private void fillVeranstaltungsInformation() {
         WebVeranstaltung veranstaltung = _ctrl.getVeranstaltung();
-        _lblVeranstaltungsname.setText(veranstaltung.getvName());
-        _lblVeranstaltungsdatum.setText(veranstaltung.getvDatum());
-        _lblVeranstaltungsort.setText(veranstaltung.getvOrt());
+        _lblVeranstaltungsname.setText(veranstaltung.getVName());
+        _lblVeranstaltungsdatum.setText(veranstaltung.getVDatum());
+        _lblVeranstaltungsort.setText(veranstaltung.getVOrt());
     }
 
     private void fillKategorieInformation() {
         WebKategorieInformation kategorie = _ctrl.getKategorie();
-        _lblKategoriename.setText(kategorie.katName);
-        _lblKategoriepreis.setText(kategorie.getKatPreis()+ " €");
-        _lblFreiePlaetze.setText("" + kategorie.getFreiePlaetze());
+        _lblKategoriename.setText(kategorie.getKatinfName());
+        _lblKategoriepreis.setText(kategorie.getKatinfPreis()+ " €");
+        _lblFreiePlaetze.setText("" + kategorie.getKatinfFreiePlaetze());
     }
 
     private void btnKaufenClicked() {

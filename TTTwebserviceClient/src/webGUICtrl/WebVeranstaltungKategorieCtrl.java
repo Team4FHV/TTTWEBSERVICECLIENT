@@ -4,10 +4,11 @@
  */
 package webGUICtrl;
 
-import webserviceDTO.*;
-import java.util.ArrayList;
+
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import tttwebserviceClient.*;
 import tttwebserviceClient.WebserviceClient;
 
 /**
@@ -18,12 +19,14 @@ public class WebVeranstaltungKategorieCtrl {
 
     private WebVeranstaltung _veranstaltung;
     private WebserviceClient _client;
-    private ArrayList<WebKategorieInformation> _kategorien;
+    private List<WebKategorieInformation> _kategorien;
 
     public WebVeranstaltungKategorieCtrl(int veranstaltungID, WebserviceClient client) {
         _client = client;
         _veranstaltung = _client.getVeranstaltungById(veranstaltungID);
-        _kategorien = _client.getKategorieInfoVonVeranstaltung(new WebVeranstaltungAnzeigen(_veranstaltung.vid));
+        WebVeranstaltungAnzeigen temp = new WebVeranstaltungAnzeigen();
+        temp.setVanzId(_veranstaltung.getVid());
+        _kategorien = _client.getKategorieInfoVonVeranstaltung(temp);
     }
 
     public WebVeranstaltung getVeranstaltung() {
@@ -33,10 +36,10 @@ public class WebVeranstaltungKategorieCtrl {
     public TableModel getKategorieInfoModel() {
         Object[][] ob = new Object[_kategorien.size()][4];
         for (int i = 0; i < _kategorien.size(); i++) {
-            ob[i][0] = _kategorien.get(i).kategId;
-            ob[i][1] = _kategorien.get(i).katName;
-            ob[i][2] = _kategorien.get(i).katPreis + "€";
-            ob[i][3] = _kategorien.get(i).freiePlaetze;
+            ob[i][0] = _kategorien.get(i).getKatinfKatId();
+            ob[i][1] = _kategorien.get(i).getKatinfName();
+            ob[i][2] = _kategorien.get(i).getKatinfPreis() + "€";
+            ob[i][3] = _kategorien.get(i).getKatinfFreiePlaetze();
         }
         return (new DefaultTableModel(
                 ob,
@@ -64,7 +67,7 @@ public class WebVeranstaltungKategorieCtrl {
         WebKategorieInformation selectedKategorie = null;
         selectedKategorie = _client.getKategorieInfo(id);
         if (selectedKategorie != null) {
-            WebMainGuiCtrl.KategorieAusgewählt(_veranstaltung.vid, selectedKategorie.kategId);
+            WebMainGuiCtrl.KategorieAusgewählt(_veranstaltung.getVid(), selectedKategorie.getKatinfKatId());
         }
     }
 
@@ -74,6 +77,8 @@ public class WebVeranstaltungKategorieCtrl {
 
     void setVeranstaltungsID(int id) {
         _veranstaltung = _client.getVeranstaltungById(id);
-        _kategorien = _client.getKategorieInfoVonVeranstaltung(new WebVeranstaltungAnzeigen(_veranstaltung.vid));
+        WebVeranstaltungAnzeigen temp = new WebVeranstaltungAnzeigen();
+        temp.setVanzId(_veranstaltung.getVid());
+        _kategorien = _client.getKategorieInfoVonVeranstaltung(temp);
     }
 }

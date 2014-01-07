@@ -5,13 +5,13 @@
  */
 package webGUICtrl;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import tttwebserviceClient.*;
 import tttwebserviceClient.WebserviceClient;
-import webserviceDTO.*;
+
 
 /**
  *
@@ -19,7 +19,7 @@ import webserviceDTO.*;
  */
 public class WebVeranstaltungsSuchenCtrl {
 
-    private ArrayList<WebVeranstaltung> _veranstaltungen = new ArrayList<>();
+    private List<WebVeranstaltung> _veranstaltungen = new ArrayList<>();
     private WebserviceClient _client;
 
     public WebVeranstaltungsSuchenCtrl(WebserviceClient client) {
@@ -39,11 +39,11 @@ public class WebVeranstaltungsSuchenCtrl {
         Object[][] ob = new Object[_veranstaltungen.size()][5];
         for (int i = 0; i < _veranstaltungen.size(); i++) {
             WebVeranstaltung ev = _veranstaltungen.get(i);
-            ob[i][0] = ev.vDatum;
-            ob[i][1] = ev.vName;
-            ob[i][2] = ev.vOrt;
-            ob[i][3] = ev.kuenstler;
-            ob[i][4] = ev.vid;
+            ob[i][0] = ev.getVDatum();
+            ob[i][1] = ev.getVName();
+            ob[i][2] = ev.getVOrt();
+            ob[i][3] = ev.getVKuenstler();
+            ob[i][4] = ev.getVid();
         }
         return (new DefaultTableModel(ob, new String[]{
             "Datum", "Name", "Ort", "Künstler", "Id"

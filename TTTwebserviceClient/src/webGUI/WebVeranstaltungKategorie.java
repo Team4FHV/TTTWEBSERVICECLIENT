@@ -6,8 +6,8 @@ package webGUI;
 
 
 import webGUICtrl.WebVeranstaltungKategorieCtrl;
-import webserviceDTO.WebVeranstaltung;
 import javax.swing.JFrame;
+import tttwebserviceClient.WebVeranstaltung;
 
 /**
  *
@@ -347,9 +347,9 @@ public class WebVeranstaltungKategorie extends javax.swing.JFrame {
 
     private void fillVeranstaltungsInformation() {
         WebVeranstaltung veranstaltung = _ctrl.getVeranstaltung();
-        _lblVeranstaltungsname.setText(veranstaltung.getvName());
-        _lblVeranstaltungsdatum.setText(veranstaltung.getvDatum());
-        _lblVeranstaltungsort.setText(veranstaltung.getvOrt());
+        _lblVeranstaltungsname.setText(veranstaltung.getVName());
+        _lblVeranstaltungsdatum.setText(veranstaltung.getVDatum());
+        _lblVeranstaltungsort.setText(veranstaltung.getVOrt());
     }
 
     private void setTableModel() {

@@ -6,10 +6,7 @@
 package tttwebserviceClient;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import webservice.TTTwebservice;
-import webserviceDTO.*;
 
 /**
  *
@@ -27,34 +24,29 @@ public class WebserviceClient {
     }
 
     private void initConnection() {
-        //  TTTwebserviceService factory = new TTTwebserviceService();
-        //stub = factory.getTTTwebservicePort();
+        WebserviceTTTService factory = new WebserviceTTTService();
+        stub = factory.getTTTwebservicePort();
     }
 
-    public ArrayList<WebVeranstaltung> sucheVeranstaltungNachKriterien(String datum, String ort, String kuenstler) {
-        ArrayList<WebVeranstaltung> result = new ArrayList<>();
-        WebVeranstaltung[] list = stub.sucheVeranstaltungNachKriterien(datum, ort, kuenstler);
-        result.addAll(Arrays.asList(list));
-        return result;
+    public List<WebVeranstaltung> sucheVeranstaltungNachKriterien(String datum, String ort, String kuenstler) {
+       List<WebVeranstaltung> rv = new ArrayList<WebVeranstaltung>();
+        rv = stub.sucheVeranstaltungNachKriterien(datum, ort, kuenstler);
+        return rv;
     }
 
-    public ArrayList<WebKategorieInformation> getKategorieInfoVonVeranstaltung(WebVeranstaltungAnzeigen veranstaltung) {
-        ArrayList<WebKategorieInformation> result = new ArrayList<>();
-        WebKategorieInformation[] list = stub.getKategorieInfoVonVeranstaltung(veranstaltung);
-        result.addAll(Arrays.asList(list));
+    public List<WebKategorieInformation> getKategorieInfoVonVeranstaltung(WebVeranstaltungAnzeigen veranstaltung) {
+        List<WebKategorieInformation> result = new ArrayList<>();
+        result = stub.getKategorieInfoVonVeranstaltung(veranstaltung);
         return result;
     }
 
     public WebKategorieKarte getAlleFreieKartenNachKategorie(int id) {
-        return stub.getAlleFreieKartenNachKategorie(new WebKategorieAuswaehlen(id));
+        return stub.getAlleFreieKartenNachKategorie(id);
     }
 
     public void verkaufSpeichern(List<WebKarteBestellen> list) {
-        WebKarteBestellen[] karten = new WebKarteBestellen[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            karten[i] = list.get(i);
-        }
-        stub.verkaufSpeichern(karten);
+        
+        stub.verkaufSpeichern(list);
     }
 
     public WebKategorieInformation getKategorieInfo(int id) {
@@ -62,7 +54,7 @@ public class WebserviceClient {
     }
 
     public WebVeranstaltung getVeranstaltungById(int veranstaltungID) {
-        return new WebVeranstaltung(veranstaltungID, "", "", "", "", true);
+        return stub.getVeranstaltungById(veranstaltungID);
     }
 
 }
